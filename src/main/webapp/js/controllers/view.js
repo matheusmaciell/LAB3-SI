@@ -1,20 +1,19 @@
-var routerApp = angular.module('routerApp', ['ui.router']);
+angular.module('feira-app',['ngRoute'])
 
-routerApp.config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/home');
 
-    $stateProvider
-
-    // HOME STATES AND NESTED VIEWS ========================================
-        .state('home', {
-            url: '/home',
-            templateUrl: 'partial-home.html'
+angular.module('feira-app')
+    .config(function($routeProvider) {
+      $routeProvider
+        .when('/', {
+          templateUrl: 'index2.html',
+       //   controller: 'loginController'
         })
-
-        // ABOUT PAGE AND MULTIPLE NAMED VIEWS =================================
-        .state('about', {
-            // we'll get to this in a bit
+        .when('/{id}', {
+          templateUrl: 'index1.html',
+      //    controller: 'listaSerieCtrl'
+        }).otherwise({
+          redirectTo: '/animais'
         });
-
+  
 });
