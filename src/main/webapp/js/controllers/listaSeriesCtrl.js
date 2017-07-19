@@ -1,5 +1,8 @@
 
-angular.module("listaSeries").controller("listaSeriesCtrl", function ($scope,$http,$mdSidenav) {
+
+
+
+angular.module("feira-app").controller("listaSeriesCtrl", function ($scope,$http,$mdSidenav) {
 	$scope.app = "Lista De Séries";
 	$scope.series = [];
 	$scope.minhasSeries = [];

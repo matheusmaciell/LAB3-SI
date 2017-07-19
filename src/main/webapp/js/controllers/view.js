@@ -1,4 +1,4 @@
-angular.module('feira-app',['ngRoute'])
+angular.module('feira-app',['ngRoute','ngMaterial'])
 
 
 
@@ -6,14 +6,14 @@ angular.module('feira-app')
     .config(function($routeProvider) {
       $routeProvider
         .when('/', {
-          templateUrl: 'index2.html',
-       //   controller: 'loginController'
+          templateUrl: 'login.html',
+          controller: 'loginController'
         })
-        .when('/{id}', {
-          templateUrl: 'index1.html',
-      //    controller: 'listaSerieCtrl'
+        .when('/home.html', {
+          templateUrl: 'home.html',
+          controller: 'listaSeriesCtrl'
         }).otherwise({
-          redirectTo: '/animais'
+          redirectTo: '/a'
         });
   
 });

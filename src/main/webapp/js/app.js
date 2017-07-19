@@ -1,1 +1,1 @@
-angular.module("listaSeries", ['ngMaterial']);
+

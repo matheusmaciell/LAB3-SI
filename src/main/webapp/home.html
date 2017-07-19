@@ -1,27 +1,18 @@
 <!DOCTYPE html>
-<html ng-app=listaSeries>
+<html>
 <head>
 	<title>Organizador de séries</title>
 
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width" />
-	<link rel="stylesheet" type="text/css" href="lib/angular/angular-material.min.css">
-	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/app.css">
 
 
 
-	<script src="lib/angular/angular.min.js"></script>
-	<script src="lib/angular/angular-material.min.js"></script>
-	<script src="lib/angular/angular-animate.min.js"></script>
-	<script src="lib/angular/angular-aria.min.js"></script>
-	<script src="lib/angular/angular-messages.min.js"></script>
-	<script src="js/app.js"></script>
-	<script src="js/controllers/listaSeriesCtrl.js"></script>
-	<script src="//code.angularjs.org/1.4.4/angular-route.js"></script>
+
+	
+
 
 </head>
-<body ng-controller="listaSeriesCtrl">
+<body>
 
 
 
@@ -44,7 +35,7 @@
 							</form>
 
 
-							<div  ng-repeat="seriePOJO in series" class="col-sm-6 col-md-4">
+							<div  ng-repeat="serie in series" class="col-sm-6 col-md-4">
 
 
 
@@ -62,10 +53,10 @@
 												<div>
 
 
-													<a href="#informacoes" > <img data-toggle="modal"  src="{{seriePOJO.Poster}}" ng-click = "toggleLeft();buscaInfoSerie(seriePOJO.imdbID);"/></a>
+													<a href="#informacoes" > <img data-toggle="modal"  src="{{serie.Poster}}" ng-click = "toggleLeft();buscaInfoSerie(serie.imdbID);"/></a>
 													<h3>
-														<button type="button" class="btn btn-info btn-lg" ng-click="addSerieWatch(seriePOJO)"  >Watchlist</button>
-														<button type="button" class="btn btn-info btn-lg" ng-click="addSeriePerfil(seriePOJO)" >Perfil</button>
+														<button type="button" class="btn btn-info btn-lg" ng-click="addSerieWatch(serie)"  >Watchlist</button>
+														<button type="button" class="btn btn-info btn-lg" ng-click="addSeriePerfil(serie)" >Perfil</button> 
 													</h3>
 
 												</div>
@@ -94,7 +85,7 @@
 
 						<md-tab label="Perfil">
 
-							<div  ng-repeat="seriePOJO in minhasSeries" class="col-sm-6 col-md-4">
+							<div  ng-repeat="serie in minhasSeries" class="col-sm-6 col-md-4">
 
 
 
@@ -112,8 +103,8 @@
 												<div>
 
 
-													<a href="#informacoes" ><img data-toggle="modal"  src="{{seriePOJO.Poster}}" ng-click = "toggleLeft();buscaInfoSerie(seriePOJO.imdbID);"/>
-														<button type="button" class="btn btn-info btn-lg" ng-click="confirmaExclusao(seriePOJO)"  >remover</button>
+													<a href="#informacoes" ><img data-toggle="modal"  src="{{serie.Poster}}" ng-click = "toggleLeft();buscaInfoSerie(serie.imdbID);"/>
+														<button type="button" class="btn btn-info btn-lg" ng-click="confirmaExclusao(serie)"  >remover</button>
 													</a>
 												</div>
 
@@ -138,7 +129,7 @@
 
 
 						<md-tab label="Watchlist" >
-							<div  ng-repeat="seriePOJO in watchlist" class="col-sm-6 col-md-4">
+							<div  ng-repeat="serie in watchlist" class="col-sm-6 col-md-4">
 
 
 
@@ -156,9 +147,9 @@
 												<div>
 
 
-													<a href="#informacoes" > <img src="{{seriePOJO.Poster}}" ng-click = "toggleLeft();buscaInfoSerie(seriePOJO.imdbID);"/></a>
+													<a href="#informacoes" > <img src="{{serie.Poster}}" ng-click = "toggleLeft();buscaInfoSerie(serie.imdbID);"/></a>
 													<h3>
-														<button type="button" class="btn btn-info btn-lg" ng-click="addSeriePerfil(seriePOJO)">Perfil</button>
+														<button type="button" class="btn btn-info btn-lg" ng-click="addSeriePerfil(serie)">Perfil</button>
 														
 													</h3>
 
