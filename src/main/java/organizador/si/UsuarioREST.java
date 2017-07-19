@@ -42,15 +42,15 @@ public class UsuarioREST {
     }
 
     @RequestMapping(value = "/logar", method = RequestMethod.POST)
-    public void logarUser(@RequestBody UsuarioPOJO user) {
+    public UsuarioPOJO logarUser(@RequestBody UsuarioPOJO user) {
         for (UsuarioPOJO usuario:userRepository.findAll()) {
             if(usuario.getEmail().equals(user.getEmail())){
-                System.out.println("ae carai");
-                return;
+                return user;
             }
 
         }
         System.out.println("fudeu");
 
+        return null;
     }
 }

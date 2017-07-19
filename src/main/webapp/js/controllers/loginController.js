@@ -1,3 +1,5 @@
+
+
 var login = angular.module('login', []);
 
 angular.module("login").controller("loginController", function ($scope,$http){
@@ -5,25 +7,24 @@ angular.module("login").controller("loginController", function ($scope,$http){
 
     $scope.cadastrar = function(email, senha){
 
-        var url = "/cadastrar";
+        var url = "/cadastro";
 
 
         var data = {
 
-            email: email,
-            nome: email,
-            senha: senha
+            "email": email,
+            "senha": senha
         };
 
 
         $http.post(url, data).then(function (response) {
 
 
-            console.log("deu certo");
+            console.log(response);
 
         }, function (response) {
 
-            console.log("deu errado");
+            console.log(response);
             $scope.postResultMessage = "Fail!";
         });
     }
@@ -37,14 +38,13 @@ angular.module("login").controller("loginController", function ($scope,$http){
         var data = {
 
             email: email,
-            nome: email,
             senha: senha
         };
 
         $http.post(url, data).then(function (response) {
 
 
-            console.log("deu certo");
+            console.log(response);
 
         }, function (response) {
 
