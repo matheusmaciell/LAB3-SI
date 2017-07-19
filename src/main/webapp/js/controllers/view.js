@@ -5,15 +5,15 @@ angular.module('feira-app',['ngRoute','ngMaterial'])
 angular.module('feira-app')
     .config(function($routeProvider) {
       $routeProvider
-        .when('/', {
+        .when('/login.html', {
           templateUrl: 'login.html',
           controller: 'loginController'
         })
-        .when('/home.html', {
+        .when('/', {
           templateUrl: 'home.html',
           controller: 'listaSeriesCtrl'
         }).otherwise({
-          redirectTo: '/a'
+          redirectTo: '/'
         });
   
 });

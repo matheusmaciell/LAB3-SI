@@ -1,0 +1,33 @@
+<md-dialog aria-label="Mango (Fruit)">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>informações da séries</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+      
+       
+
+        <h3>{{idSerieBuscada.Title}}</h3>
+		<img class="imagem" src="{{idSerieBuscada.Poster}}" /> 
+
+       <h3>sinopse:</h3>
+		<h4>{{idSerieBuscada.Plot}}</h4>
+
+		<h3>média do IMDb:</h3>
+		<h4>{{idSerieBuscada.imdbRating}}</h4>
+
+		<h3>classificação etária:</h3>
+		<h4>{{idSerieBuscada.Rated}}</h4>
+        
+      </div>
+    </md-dialog-content>
+  </form>
+</md-dialog>

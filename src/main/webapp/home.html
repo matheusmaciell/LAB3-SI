@@ -53,7 +53,7 @@
 												<div>
 
 
-													<a href="#informacoes" > <img data-toggle="modal"  src="{{serie.Poster}}" ng-click = "toggleLeft();buscaInfoSerie(serie.imdbID);"/></a>
+													<a > <img data-toggle="modal"  src="{{serie.Poster}}" ng-click ="buscaInfoSerie(serie.imdbID,$event);"/></a>
 													<h3>
 														<button type="button" class="btn btn-info btn-lg" ng-click="addSerieWatch(serie)"  >Watchlist</button>
 														<button type="button" class="btn btn-info btn-lg" ng-click="addSeriePerfil(serie)" >Perfil</button> 
@@ -173,6 +173,8 @@
 			</div>
 		</md-card>
 		<div id="informacoes">
+		
+		
 			<md-sidenav class="md-sidenav-left" md-component-id="left"
 			md-disable-backdrop md-whiteframe="4">
 

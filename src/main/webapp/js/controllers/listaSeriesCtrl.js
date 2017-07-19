@@ -2,7 +2,7 @@
 
 
 
-angular.module("feira-app").controller("listaSeriesCtrl", function ($scope,$http,$mdSidenav) {
+angular.module("feira-app").controller("listaSeriesCtrl", function ($scope,$http,$mdSidenav,$mdDialog) {
 	$scope.app = "Lista De Séries";
 	$scope.series = [];
 	$scope.minhasSeries = [];
@@ -11,8 +11,27 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($scope,$http
 	$scope.toggleLeft = buildToggler('left');
 	$scope.notasSeries = [];
 	$scope.serieDoPerfil = {};
+	$scope.seriePesquisada = "";
+
+	
+	
+	
+
+	
+
+	  
+
+	
 
 
+
+	
+	
+	
+	
+	
+	
+	
 	$scope.pesquisarSerie = function(nomeSerie){
 		$http.get("https://omdbapi.com/?s=" + nomeSerie + "&apikey=93330d3c&type=series").then(function(response) {
 			if(response.data.Response == "True"){
@@ -32,18 +51,50 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($scope,$http
       };
     }
 
-	$scope.buscaInfoSerie = function(key){
+	
+
+
+		      
+
+	$scope.buscaInfoSerie = function (key,ev) {
+		        $http.get("https://omdbapi.com/?i="+ key +"&apikey=93330d3c&type=series").then(function (response) {
+		        	$scope.idSerieBuscada = response.data;
+		          
+		          
+		        	console.log($scope.idSerieBuscada);
+		        	
+		          $mdDialog.show({
+		            controller: DialogController,
+		            templateUrl: 'alert.html',
+		            parent: angular.element(document.body),
+		            targetEvent: ev,
+		            clickOutsideToClose:true,
+		            locals: {
+		              idSerieBuscada: $scope.idSerieBuscada
+		            }
+		          });
+		        });
+
+
+
+		      }	      
 		
+		
+	function DialogController($scope, $mdDialog, idSerieBuscada) {
+		    $scope.idSerieBuscada = idSerieBuscada;
 
-		$http.get("https://omdbapi.com/?i=" + key + "&apikey=93330d3c").then(function(response) {
-			
-				
-			$scope.idSerieBuscada = response.data;
-			
-			$scope.mudaSerieDaVez(response.data);
-			});
+		    $scope.hide = function() {
+		      $mdDialog.hide();
+		    };
 
-	}
+		    $scope.cancel = function() {
+		      $mdDialog.cancel();
+		    };
+
+		    $scope.answer = function(answer) {
+		      $mdDialog.hide(answer);
+		    };
+		  }	
 
 	$scope.mudaSerieDaVez = function(serie){
 		for (var i = $scope.notasSeries.length - 1; i >= 0; i--) {
