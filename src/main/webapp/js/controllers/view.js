@@ -1,19 +1,31 @@
-angular.module('feira-app',['ngRoute','ngMaterial'])
+const app = angular.module("feira-app", ['ui.router', 'ngMaterial']);
 
+app.config(function($stateProvider, $urlRouterProvider) {
 
+    $urlRouterProvider.otherwise('/login');
 
-angular.module('feira-app')
-    .config(function($routeProvider) {
-      $routeProvider
-        .when('/login.html', {
-          templateUrl: 'login.html',
-          controller: 'loginController'
+    $stateProvider
+        .state('main', {
+            url: '',
+            abstract: true,
+            template: '<div ui-view></div>',
+            controller:'loginController'
         })
-        .when('/', {
-          templateUrl: 'home.html',
-          controller: 'listaSeriesCtrl'
-        }).otherwise({
-          redirectTo: '/'
+
+        .state( 'main.login',{
+            url: '/login',
+            templateUrl: 'login.html',
+            controller:'loginController'
+        })
+
+        .state('home', {
+            url:'/home',
+            templateUrl: 'home.html',
+            controller:'listaSeriesCtrl'
         });
-  
+
+
+
+
 });
+

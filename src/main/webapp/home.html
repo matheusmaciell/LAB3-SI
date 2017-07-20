@@ -103,7 +103,7 @@
 												<div>
 
 
-													<a href="#informacoes" ><img data-toggle="modal"  src="{{serie.Poster}}" ng-click = "toggleLeft();buscaInfoSerie(serie.imdbID);"/>
+													<a ><img data-toggle="modal"  src="{{serie.Poster}}" ng-click = "buscaInfoSerie(serie.imdbID,$event);"/>
 														<button type="button" class="btn btn-info btn-lg" ng-click="confirmaExclusao(serie)"  >remover</button>
 													</a>
 												</div>
@@ -147,7 +147,7 @@
 												<div>
 
 
-													<a href="#informacoes" > <img src="{{serie.Poster}}" ng-click = "toggleLeft();buscaInfoSerie(serie.imdbID);"/></a>
+													<a> <img src="{{serie.Poster}}" ng-click = "buscaInfoSerie(serie.imdbID,$event);"/></a>
 													<h3>
 														<button type="button" class="btn btn-info btn-lg" ng-click="addSeriePerfil(serie)">Perfil</button>
 														

@@ -26,6 +26,37 @@
 
 		<h3>classificação etária:</h3>
 		<h4>{{idSerieBuscada.Rated}}</h4>
+          <span ng-if="pertencePerfil(idSerieBuscada)">
+
+              <h3>Sua nota:</h3>
+              <h4>{{serieDoPerfil.nota}}</h4>
+              <form>
+                  <div class="input-group">
+                      <input type="text" class="form-control" ng-model="notaSerie" id="notaSerie" placeholder="Nota">
+                      <div class="input-group-btn">
+                          <button class="btn btn-default" type="submit"  ng-click="addNota(idSerieBuscada,notaSerie)" ng-disabled="!notaSerie">
+                              <i class="glyphicon glyphicon-circle-arrow-right"></i> </button>
+                      </div>
+                  </div>
+              </form>
+
+              <h3>Episódio assistido:</h3>
+              <h4>{{serieDoPerfil.episodio}}</h4>
+
+              <form>
+                  <div class="input-group">
+                      <input type="text" class="form-control" ng-model="numeroEp"  id="numeroEp" placeholder="Episódio">
+                      <div class="input-group-btn">
+                          <button class="btn btn-default" type="submit" ng-click="addEpisodio(idSerieBuscada,numeroEp)"  ng-disabled="!numeroEp">
+                              <i class="glyphicon glyphicon-circle-arrow-right"></i> </button>
+                      </div>
+                  </div>
+              </form>
+
+
+
+              <hr>
+          </span>
         
       </div>
     </md-dialog-content>

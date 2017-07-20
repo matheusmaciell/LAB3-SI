@@ -1,7 +1,7 @@
 
 
 
-angular.module("feira-app").controller("loginController", function ($scope,$http){
+angular.module("feira-app").controller("loginController", function ($scope,$http,$state){
 
 
     $scope.cadastrar = function(email, senha){
@@ -43,8 +43,8 @@ angular.module("feira-app").controller("loginController", function ($scope,$http
         };
 
         $http.post(url, data).then(function (response) {
-        
-        	window.location.replace('/home.html');
+
+            $state.go("home");
             console.log(response);
 
         }, function (response) {

@@ -60,8 +60,7 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($scope,$http
 		        $http.get("https://omdbapi.com/?i="+ key +"&apikey=93330d3c&type=series").then(function (response) {
 		        	$scope.idSerieBuscada = response.data;
 		          
-		          
-		        	console.log($scope.idSerieBuscada);
+
 		        	
 		          $mdDialog.show({
 		            controller: DialogController,
@@ -127,8 +126,11 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($scope,$http
 	}
 
 	$scope.pertencePerfil = function(serie){
+        console.log($scope.notasSeries);
+
 		for (var i = $scope.notasSeries.length - 1; i >= 0; i--) {
 			if($scope.notasSeries[i].serie.Title == serie.Title){
+
 				return true;
 				
 			}
