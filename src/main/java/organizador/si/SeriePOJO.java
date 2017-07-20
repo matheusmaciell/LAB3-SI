@@ -24,7 +24,6 @@ public class SeriePOJO {
     @Column(name = "userId")
     private String userId;	
     
-
    
 
     public String getUserId() {

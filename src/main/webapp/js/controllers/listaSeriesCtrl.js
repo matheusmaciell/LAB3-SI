@@ -10,7 +10,69 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 	$scope.idSerieBuscada = {};
 	$scope.notasSeries = [];
 	$scope.serieDoPerfil = {};
+	$scope.seriesUsuario = [];
+	$scope.emailLogado = "";
 
+	    $scope.cadastrar = function(email, senha,nome){
+
+	        var url = "/cadastro";
+
+	        console.log(nome);
+	        var data = {
+
+	            "email": email,
+	            "senha": senha,
+	            "nome":nome
+	        };
+
+
+	        $http.post(url, data).then(function (response) {
+	        	
+	            alert("Usuário cadastrado com sucesso!");
+
+	        }, function (response) {
+
+
+	            $scope.postResultMessage = "Fail!";
+	        });
+	    }
+
+
+
+	    $scope.logar = function(email,senha){
+	        var url = "/logar";
+
+
+	        var data = {
+
+	            email: email,
+	            senha: senha
+	        };
+
+	        $http.post(url, data).then(function (response) {
+
+
+	            if(response.data){
+
+	              
+	              
+	                $state.go("main.home");
+	                $scope.emailLogado = email;
+	            }else{
+	                alert("Dados inválidos ou usuário não cadastrado");
+	            }
+
+
+
+	        }, function (response) {
+
+	            console.log("deu errado");
+	            $scope.postResultMessage = "Fail!";
+	        });
+	    }
+	
+	
+	
 
 	
 	$scope.pesquisarSerie = function(nomeSerie){
@@ -22,7 +84,8 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 			}else{
 				alert("a série nao existe");
 			};
-
+	
+			
 			delete $scope.nomeSerie;
 	});
 	}	
@@ -115,46 +178,66 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		return false;
 	}
 	
-//	$scope.addSeriePerfil = function(serie){
-//		
-//        if(!$scope.verificaArray(serie)){
-//        
-//		 	alert("série já pertence ao seu perfil");
-//		 }else{
-//		 	$scope.minhasSeries.push(serie);
-//		 	$scope.notasSeries.push({serie,"nota":"","episodio":""});
-//		 	$scope.addBD(serie);
-//		 }
-//		 $scope.removeSerieWatchlist(serie);
-//		 
-//	}
+	$scope.pegaSerie = function(){
+		var url = "/serie/" + $scope.emailLogado;
+		$http.get(url).then(function (response) {
+			$scope.seriesUsuario = response.data;
+			$scope.buscaNaApi();
+			
+    	 }, function (response) {
+    		 
+
+            $scope.postResultMessage = "Fail!";
+        });
+		
+	}
+	
+	$scope.buscaNaApi = function(){
+		console.log($scope.seriesUsuario);
+		for (var i = 0; i < $scope.seriesUsuario.length; i++) {
+			$http.get("https://omdbapi.com/?i="+ $scope.seriesUsuario[i].id_imbdb +"&apikey=93330d3c&type=series").then(function(response) {
+				$scope.minhasSeries.push(response.data);
+					
+				
+				
+		});
+			
+		}
+	}
 
 	$scope.addSeriePerfil = function(serie){
 		var url = "/seriesperfil";
         var data = {
             "id_imbdb":serie.imdbID,
-            "userId": "matehus"
+            "userId": $scope.emailLogado
         };
-        
+        console.log($scope.emailLogado);
         $http.post(url, data).then(function (response) {
         	if(response.data){
         		alert("série já pertence ao seu perfil");
         	}
         	else{
-    		 	$scope.minhasSeries.push(serie);
-    		 	$scope.notasSeries.push({serie,"nota":"","episodio":""});
+    		 //	$scope.minhasSeries.push(serie);
+    		 //	$scope.notasSeries.push({serie,"nota":"","episodio":""});
     		 	$scope.addBD(serie);
+    		 	
     		 }
     		 $scope.removeSerieWatchlist(serie);
-    		 console.log($scope.minhasSeries);
+    		
+    		 
+    		 $scope.pegaSerie();
+    		
     	 }, function (response) {
     		 
 
             $scope.postResultMessage = "Fail!";
         });
 
-		return false;
+		
 	}
+	
+	
+	
 	$scope.addSerieWatch = function(serie){
 		if($scope.verificaArray(serie,$scope.watchlist)){
 			alert("série já pertence ao seu watchlist");
@@ -177,8 +260,10 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		var url = "/salvar";
         var data = {
             "id_imbdb":serie.imdbID,
-            "userId": "matehus"
+            "userId": $scope.emailLogado,
+          
         };
+        
 
 
         $http.post(url, data).then(function (response) {

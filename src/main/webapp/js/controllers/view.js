@@ -9,19 +9,19 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '',
             abstract: true,
             template: '<div ui-view></div>',
-            controller:'loginController'
+            controller:'listaSeriesCtrl'
         })
 
         .state( 'main.login',{
             url: '/login',
             templateUrl: 'login.html',
-            controller:'loginController'
+        
         })
 
-        .state('home', {
+        .state('main.home', {
             url:'/home',
             templateUrl: 'home.html',
-            controller:'listaSeriesCtrl'
+         
         });
 
 

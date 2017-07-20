@@ -1,6 +1,7 @@
 package organizador.si;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,10 +42,10 @@ public class SerieREST {
     
     
 
-    @RequestMapping(value="/teste", method = RequestMethod.GET)
-    public List<SeriePOJO> getSeriesSalvas(){
-    	List<SeriePOJO> series = serieReposity.findAll();
-    	return  series;
+    @RequestMapping(value="/serie/{userId}", method = RequestMethod.GET)
+    public List<SeriePOJO> getSeriesSalvas(@PathVariable String userId){
+    	return serieReposity.findByUserId(userId);
+    	
     	
     }
     
