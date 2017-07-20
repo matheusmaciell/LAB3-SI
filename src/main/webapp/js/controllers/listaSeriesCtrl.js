@@ -37,7 +37,7 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		        $http.get("https://omdbapi.com/?i="+ key +"&apikey=93330d3c&type=series").then(function (response) {
 		        	$scope.idSerieBuscada = response.data;
 		          
-                    console.log(ev);
+             
 		        	
 		          $mdDialog.show({
 		            controller: DialogController,
@@ -114,14 +114,45 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		}
 		return false;
 	}
+	
+//	$scope.addSeriePerfil = function(serie){
+//		
+//        if(!$scope.verificaArray(serie)){
+//        
+//		 	alert("série já pertence ao seu perfil");
+//		 }else{
+//		 	$scope.minhasSeries.push(serie);
+//		 	$scope.notasSeries.push({serie,"nota":"","episodio":""});
+//		 	$scope.addBD(serie);
+//		 }
+//		 $scope.removeSerieWatchlist(serie);
+//		 
+//	}
 
-	$scope.verificaArray = function(serie,array){
-		for (var i = array.length - 1; i >= 0; i--) {
-			if(array[i].imdbID == serie.imdbID){
-				return true;
-				
-			}
-		}
+	$scope.addSeriePerfil = function(serie){
+		var url = "/seriesperfil";
+        var data = {
+            "id_imbdb":serie.imdbID,
+            "userId": "matehus"
+        };
+        
+        $http.post(url, data).then(function (response) {
+        	if(response.data){
+        		alert("série já pertence ao seu perfil");
+        	}
+        	else{
+    		 	$scope.minhasSeries.push(serie);
+    		 	$scope.notasSeries.push({serie,"nota":"","episodio":""});
+    		 	$scope.addBD(serie);
+    		 }
+    		 $scope.removeSerieWatchlist(serie);
+    		 console.log($scope.minhasSeries);
+    	 }, function (response) {
+    		 
+
+            $scope.postResultMessage = "Fail!";
+        });
+
 		return false;
 	}
 	$scope.addSerieWatch = function(serie){
@@ -139,44 +170,28 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		
 	}
 
-	$scope.addSeriePerfil = function(serie,email){
-        console.log(serie.imdbID);
-        var url = "/salvar";
-            var data = {
-                "id_imbdb":serie.imdbID,
-                "estaNoPerfil":serie.imdbID,
-                "estaNoWatchlist":serie.imdbID,
-                "avaliacaoUsuario":serie.imdbID,
-                "epAssistido":serie.imdbID
-            };
+	
+	
+	
+	$scope.addBD = function(serie){
+		var url = "/salvar";
+        var data = {
+            "id_imbdb":serie.imdbID,
+            "userId": "matehus"
+        };
 
 
-            $http.post(url, data).then(function (response) {
-        		if(!response.data){
-                        alert("série já pertence ao seu perfil");
-        		}
+        $http.post(url, data).then(function (response) {
+    	 }, function (response) {
 
 
+            $scope.postResultMessage = "Fail!";
+        });
 
-            }, function (response) {
-
-
-                $scope.postResultMessage = "Fail!";
-            });
-
-
-
-
-
-	    // if($scope.verificaArray(serie,$scope.minhasSeries)){
-        //
-		// 	alert("série já pertence ao seu perfil");
-		// }else{
-		// 	$scope.minhasSeries.push(serie);
-		// 	$scope.notasSeries.push({serie,"nota":"","episodio":""});
-		// }
-		// $scope.removeSerieWatchlist(serie);
 	}
+	
+	
+	
 	$scope.removeSerieWatchlist = function(serie){
 		for (var i = $scope.watchlist.length - 1; i >= 0; i--) {
 			if($scope.watchlist[i].Title == serie.Title){
@@ -186,32 +201,6 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		}
 	}
 
-
-
-
-    // $scope.addSeriePerfil() = function(serie, email){
-    //
-    //     var url = "/salvar";
-    //     var data = {
-    //
-    //         "id_imbdb":serie.id_imbdb,
-		// 	"estaNoPerfil":email
-    //     };
-    //
-    //
-    //     $http.post(url, data).then(function (response) {
-		// 		if(!response.data){
-    //                 alert("série já pertence ao seu perfil");
-		// 		}
-    //
-    //
-    //
-    //     }, function (response) {
-    //
-    //
-    //         $scope.postResultMessage = "Fail!";
-    //     });
-    // }
 
 
 

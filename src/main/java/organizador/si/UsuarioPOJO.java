@@ -12,7 +12,6 @@ import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabe
  */
 
 @Entity
-@Table(name = "TB_USUARIO")
 public class UsuarioPOJO {
 
     @Id

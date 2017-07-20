@@ -28,7 +28,7 @@ public class SerieREST {
     @RequestMapping(value = "/salvar", method = RequestMethod.POST)
     public List<SeriePOJO> salvar(@RequestBody SeriePOJO serie){
         for (SeriePOJO serieBD:serieReposity.findAll()){
-            if(serieBD.getEstaNoPerfil().equals(serie.getEstaNoPerfil())){
+            if(serieBD.getId_imbdb().equals(serie.getId_imbdb())){
                 return  null;
             }
         }
@@ -36,5 +36,29 @@ public class SerieREST {
 
         serieReposity.save(serie);
         return serieReposity.findAll();
+    }
+    
+    
+    
+
+    @RequestMapping(value="/teste", method = RequestMethod.GET)
+    public List<SeriePOJO> getSeriesSalvas(){
+    	List<SeriePOJO> series = serieReposity.findAll();
+    	return  series;
+    	
+    }
+    
+    
+    @RequestMapping(value = "/seriesperfil", method = RequestMethod.POST)
+    public boolean seriesNoPerfil(@RequestBody SeriePOJO serie){
+    	for (SeriePOJO serieBD:serieReposity.findAll()){
+            if(serieBD.getId_imbdb().equals(serie.getId_imbdb())){
+                return  true;
+            }
+        }
+
+
+        
+        return false;
     }
 }
