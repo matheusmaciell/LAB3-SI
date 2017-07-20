@@ -25,7 +25,7 @@ public class UsuarioREST {
         for (UsuarioPOJO usuario:userRepository.findAll()) {
             if(usuario.getEmail().equals(user.getEmail())){
 
-                System.out.println("encontrouNoBd");
+
                 return null;
             }
 
@@ -42,15 +42,23 @@ public class UsuarioREST {
     }
 
     @RequestMapping(value = "/logar", method = RequestMethod.POST)
-    public UsuarioPOJO logarUser(@RequestBody UsuarioPOJO user) {
+    public boolean logarUser(@RequestBody UsuarioPOJO user) {
         for (UsuarioPOJO usuario:userRepository.findAll()) {
-            if(usuario.getEmail().equals(user.getEmail())){
-                return user;
+            if(validaLogin(usuario,user)){
+                return true;
             }
 
         }
-        System.out.println("fudeu");
 
-        return null;
+
+        return false;
+    }
+
+
+    private boolean validaLogin(UsuarioPOJO usuarioLogin, UsuarioPOJO usuarioBD){
+        if(usuarioLogin.getEmail().equals(usuarioBD.getEmail()) && usuarioLogin.getSenha().equals(usuarioBD.getSenha())){
+            return true;
+        }
+        return false;
     }
 }

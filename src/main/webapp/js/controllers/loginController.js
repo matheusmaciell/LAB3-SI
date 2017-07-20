@@ -2,30 +2,28 @@
 
 
 angular.module("feira-app").controller("loginController", function ($scope,$http,$state){
+    $scope.emailLogado = "";
 
-
-    $scope.cadastrar = function(email, senha){
+    $scope.cadastrar = function(email, senha,nome){
 
         var url = "/cadastro";
 
-
+        console.log(nome);
         var data = {
 
             "email": email,
-            "senha": senha
+            "senha": senha,
+            "nome":nome
         };
 
 
         $http.post(url, data).then(function (response) {
         	
-        	
-        	window.location.replace("/");
-
-            console.log(response);
+            alert("Usuário cadastrado com sucesso!");
 
         }, function (response) {
 
-            console.log(response);
+
             $scope.postResultMessage = "Fail!";
         });
     }
@@ -44,8 +42,17 @@ angular.module("feira-app").controller("loginController", function ($scope,$http
 
         $http.post(url, data).then(function (response) {
 
-            $state.go("home");
-            console.log(response);
+
+            if(response.data){
+
+                $scope.emailLogado = email;
+
+                $state.go("home");
+            }else{
+                alert("Dados inválidos ou usuário não cadastrado");
+            }
+
+
 
         }, function (response) {
 

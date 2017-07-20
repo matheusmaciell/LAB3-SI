@@ -1,35 +1,39 @@
 package organizador.si;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by matheus on 15/07/17.
  */
 
 @Entity
+@Table(name = "TB_SERIE")
 public class SeriePOJO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 
-
-    @Column(name = "id_imdb")
+    @NotNull
+    @Column(name = "id_imdb",unique = true )
     private String id_imbdb;
 
-
-    @Column(name = "avaliacaoUsuario")
+    @NotNull
+    @Column(name = "avaliacaoUsuario",unique = true)
     private String avaliacaoUsuario;
 
-    @Column(name = "estaNoPerfil")
+    @NotNull
+    @Column(name = "estaNoPerfil",unique = true)
     private String estaNoPerfil;
 
-
-    @Column(name = "estaNoWatchlist")
+    @NotNull
+    @Column(name = "estaNoWatchlist",unique = true)
     private String estaNoWatchlist;
 
-    @Column(name = "epAssistido")
+    @NotNull
+    @Column(name = "epAssistido" ,unique = true)
     private String esAssistido;
 
     public String getEsAssistido() {
@@ -107,88 +111,7 @@ public class SeriePOJO {
         return result;
     }
 
-    /**
-     * Created by matheus on 15/07/17.
-     */
-
-    @Entity
-    public static class Usuario {
-
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
 
 
 
-        @Column(name = "email")
-        private String email;
-
-
-        @Column(name = "senha")
-        private String senha;
-
-        @Column(name = "nome")
-        private String name;
-
-
-        public Usuario(String email, String nome, String senha) {
-            this.email = email;
-            this.senha = senha;
-            this.name = name;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getSenha() {
-            return senha;
-        }
-
-        public void setSenha(String senha) {
-            this.senha = senha;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Usuario)) return false;
-
-            Usuario usuario = (Usuario) o;
-
-            if (getId() != null ? !getId().equals(usuario.getId()) : usuario.getId() != null) return false;
-            if (getEmail() != null ? !getEmail().equals(usuario.getEmail()) : usuario.getEmail() != null) return false;
-            if (getSenha() != null ? !getSenha().equals(usuario.getSenha()) : usuario.getSenha() != null) return false;
-            return getName() != null ? getName().equals(usuario.getName()) : usuario.getName() == null;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = getId() != null ? getId().hashCode() : 0;
-            result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
-            result = 31 * result + (getSenha() != null ? getSenha().hashCode() : 0);
-            result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-            return result;
-        }
-    }
 }

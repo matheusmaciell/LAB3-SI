@@ -27,8 +27,9 @@ public class UsuarioPOJO {
     @Column(name = "senha",unique = true)
     private String senha;
 
-
-
+    @NotNull
+    @Column(name = "nome",unique = true)
+    private String nome;
 
 
 
@@ -73,5 +74,12 @@ public class UsuarioPOJO {
         this.senha = senha;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
 }
