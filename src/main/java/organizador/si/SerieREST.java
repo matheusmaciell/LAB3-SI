@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.Table;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by matheus on 20/07/17.
@@ -42,9 +42,18 @@ public class SerieREST {
     
     
 
-    @RequestMapping(value="/serie/{userId}", method = RequestMethod.GET)
-    public List<SeriePOJO> getSeriesSalvas(@PathVariable String userId){
-    	return serieReposity.findByUserId(userId);
+    @RequestMapping(value="/serie", method = RequestMethod.POST)
+    public List<SeriePOJO> getSeriesSalvas(@RequestBody String userId){
+        List<SeriePOJO> array = new ArrayList<>();
+
+        for (SeriePOJO serieBD:serieReposity.findAll()){
+            if(serieBD.getUserId().equals(userId)){
+                array.add(serieBD);
+            }
+        }
+
+
+        return array;
     	
     	
     }

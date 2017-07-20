@@ -18,16 +18,16 @@ public class UsuarioPOJO {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(name = "email",unique = true)
+  
+    @Column(name = "email")
     private String email;
 
-    @NotNull
-    @Column(name = "senha",unique = true)
+
+    @Column(name = "senha")
     private String senha;
 
-    @NotNull
-    @Column(name = "nome",unique = true)
+
+    @Column(name = "nome")
     private String nome;
 
 
