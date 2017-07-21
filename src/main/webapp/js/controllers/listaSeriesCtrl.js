@@ -314,15 +314,6 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		}
 	}
 
-    $scope.getWatchlist = function(serie){
-        var url = "/watchlist";
-
-
-        $http.post(url).then(function (response) {
-        }, function (response) {
-        	console.log(response);
-            $scope.postResultMessage = "Fail!";
-        });
-    }
+   
 
 });
