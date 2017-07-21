@@ -24,7 +24,16 @@ public class SeriePOJO {
     @Column(name = "userId")
     private String userId;	
     
-   
+    @Column(name = "estaNaWatchlist")
+    private boolean estaNaWatchlist;
+
+    public boolean isEstaNaWatchlist() {
+        return estaNaWatchlist;
+    }
+
+    public void setEstaNaWatchlist(boolean estaNaWatchlist) {
+        this.estaNaWatchlist = estaNaWatchlist;
+    }
 
     public String getUserId() {
 		return userId;

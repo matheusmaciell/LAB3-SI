@@ -38,8 +38,8 @@ public class SerieREST {
         serieReposity.save(serie);
         return serieReposity.findAll();
     }
-    
-    
+
+
     
 
     @RequestMapping(value="/serie", method = RequestMethod.POST)
@@ -57,8 +57,29 @@ public class SerieREST {
     	
     	
     }
-    
-    
+
+    @RequestMapping(value = "/removeSerie",method = RequestMethod.POST)
+    public void removeSerie(@RequestBody SeriePOJO serie){
+        for (SeriePOJO serieBD:serieReposity.findAll()){
+            if(serieBD.getId_imbdb().equals(serie.getId_imbdb())){
+                serieReposity.delete(serieBD);
+            }
+        }
+
+    }
+
+    @RequestMapping(value = "/watchlist", method = RequestMethod.POST)
+    public void addWatchlist(@RequestBody SeriePOJO serie){
+        if(this.seriesNoPerfil(serie)){
+            return;
+        }else{
+            serieReposity.save(serie);
+        }
+
+
+    }
+
+
     @RequestMapping(value = "/seriesperfil", method = RequestMethod.POST)
     public boolean seriesNoPerfil(@RequestBody SeriePOJO serie){
     	for (SeriePOJO serieBD:serieReposity.findAll()){
@@ -66,9 +87,6 @@ public class SerieREST {
                 return  true;
             }
         }
-
-
-        
         return false;
     }
 }

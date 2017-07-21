@@ -27,12 +27,11 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 
 
 	        $http.post(url, data).then(function (response) {
-	        	
+
 	            alert("Usuário cadastrado com sucesso!");
 
 	        }, function (response) {
-
-				alert("deu merda");
+				
 	            $scope.postResultMessage = "Fail!";
 	        });
 	    }
@@ -54,8 +53,8 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 
 	            if(response.data){
 
-	              
-	              
+
+
 	                $state.go("main.home");
 	                $scope.emailLogado = email;
 	                $scope.minhasSeries = [];
@@ -72,11 +71,11 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 	            $scope.postResultMessage = "Fail!";
 	        });
 	    }
-	
-	
-	
 
-	
+
+
+
+
 	$scope.pesquisarSerie = function(nomeSerie){
 		$http.get("https://omdbapi.com/?s=" + nomeSerie + "&apikey=93330d3c&type=series").then(function(response) {
 			if(response.data.Response == "True"){
@@ -86,24 +85,24 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 			}else{
 				alert("a série nao existe");
 			};
-	
-			
+
+
 			delete $scope.nomeSerie;
 	});
 	}	
 
 
-	
 
 
-		      
+
+
 
 	$scope.buscaInfoSerie = function (key,ev) {
 		        $http.get("https://omdbapi.com/?i="+ key +"&apikey=93330d3c&type=series").then(function (response) {
 		        	$scope.idSerieBuscada = response.data;
-		          
-             
-		        	
+
+
+
 		          $mdDialog.show({
 		            controller: DialogController,
 		            templateUrl: 'alert.html',
@@ -118,9 +117,9 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 
 
 
-		      }	      
-		
-		
+		      }
+
+
 	function DialogController($scope, $mdDialog, idSerieBuscada) {
 		    $scope.idSerieBuscada = idSerieBuscada;
 
@@ -141,7 +140,7 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		for (var i = $scope.notasSeries.length - 1; i >= 0; i--) {
 			if($scope.notasSeries[i].serie.Title == serie.Title){
 				$scope.serieDoPerfil = $scope.notasSeries[i];
-				
+
 			}
 		}
 	}
@@ -151,7 +150,7 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		for (var i = $scope.notasSeries.length - 1; i >= 0; i--) {
 			if($scope.notasSeries[i].serie.Title == serie.Title){
 				$scope.notasSeries[i].nota = notaSerie;
-				
+
 			}
 		}
 		delete $scope.notaSerie;
@@ -161,7 +160,7 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		for (var i = $scope.notasSeries.length - 1; i >= 0; i--) {
 			if($scope.notasSeries[i].serie.Title == serie.Title){
 				$scope.notasSeries[i].episodio = numeroEp;
-				
+
 			}
 		}
 			delete $scope.numeroEp;
@@ -173,42 +172,42 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 			if($scope.minhasSeries[i].imdbID == serie.imdbID){
 
 				return true;
-				
+
 			}
 		}
 		return false;
 	}
-	
+
+
+
+
 	$scope.pegaSerie = function(){
 		var url = "/serie"
 
 		$http.post(url,$scope.emailLogado).then(function (response) {
 			$scope.seriesUsuario = response.data;
-
+			console.log(response.data);
 			$scope.buscaNaApi();
-			
+
     	 }, function (response) {
-    		 
+
 
             $scope.postResultMessage = "Fail!";
         });
-		
+
 	}
-	
+
 	$scope.buscaNaApi = function(){
 
 		for (var i = 0; i < $scope.seriesUsuario.length; i++) {
+
 			$http.get("https://omdbapi.com/?i="+ $scope.seriesUsuario[i].id_imbdb +"&apikey=93330d3c&type=series").then(function(response) {
+                if(!$scope.pertencePerfil(response.data)){
 
-				if(!$scope.pertencePerfil(response.data)){
-                    $scope.minhasSeries.push(response.data);
-                    console.log($scope.minhasSeries);
+					$scope.minhasSeries.push(response.data);
 				}
+			});
 
-				
-				
-		});
-			
 		}
 	}
 
@@ -216,7 +215,8 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 		var url = "/seriesperfil";
         var data = {
             "id_imbdb":serie.imdbID,
-            "userId": $scope.emailLogado
+            "userId": $scope.emailLogado,
+            "estaNaWatchlist": false
         };
 
         $http.post(url, data).then(function (response) {
@@ -224,80 +224,55 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
         		alert("série já pertence ao seu perfil");
         	}
         	else{
-    		 //	$scope.minhasSeries.push(serie);
-    		 //	$scope.notasSeries.push({serie,"nota":"","episodio":""});
-    		 	$scope.addBD(serie);
+				$scope.addBD(serie);
                 $scope.removeSerieWatchlist(serie);
-
-
-                $scope.pegaSerie();
+				$scope.pegaSerie();
     		 }
-
-    		
-    	 }, function (response) {
-    		 
-
-            $scope.postResultMessage = "Fail!";
+		}, function (response) {
+			$scope.postResultMessage = "Fail!";
         });
-
-		
 	}
-	
-	
-	
 	$scope.addSerieWatch = function(serie){
-		if($scope.verificaArray(serie,$scope.watchlist)){
-			alert("série já pertence ao seu watchlist");
-		}else if ($scope.verificaArray(serie,$scope.minhasSeries)){ 
+		if ($scope.pertencePerfil(serie)){
 			alert("série já pertence ao seu perfil");
-
 		}else{
+            var url = "/watchlist";
+            var data = {
+                "id_imbdb":serie.imdbID,
+                "userId": $scope.emailLogado,
+                "estaNaWatchlist":true
+            };
 
-		 
-	 
-		$scope.watchlist.push(serie);
+
+            $http.post(url, data).then(function (response) {
+            }, function (response) {
+                $scope.postResultMessage = "Fail!";
+            });
 		}
-		
 	}
-
-	
-	
-	
 	$scope.addBD = function(serie){
 		var url = "/salvar";
         var data = {
             "id_imbdb":serie.imdbID,
             "userId": $scope.emailLogado,
-          
-        };
-        
+            "estaNaWatchlist": false
+		};
 
-
-        $http.post(url, data).then(function (response) {
+		$http.post(url, data).then(function (response) {
     	 }, function (response) {
-
-
-            $scope.postResultMessage = "Fail!";
+			$scope.postResultMessage = "Fail!";
         });
-
 	}
-	
-	
-	
 	$scope.removeSerieWatchlist = function(serie){
+
+
+
 		for (var i = $scope.watchlist.length - 1; i >= 0; i--) {
 			if($scope.watchlist[i].Title == serie.Title){
 				$scope.watchlist.splice(i, 1);
-				
 			}
 		}
 	}
-
-
-
-
-
-
 	$scope.confirmaExclusao = function(serie) {
     	var confirmacao = confirm("Deseja excluir " + serie.Title + " do seu perfil?");
 
@@ -308,13 +283,26 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 
 	$scope.removeSeriePerfil = function(serie){
 
+		var url = "/removeSerie"
+        var data = {
+            "id_imbdb":serie.imdbID,
+            "userId": $scope.emailLogado,
+        };
+        $http.post(url, data).then(function (response) {
+            for (var i = $scope.minhasSeries.length - 1; i >= 0; i--) {
+                if($scope.minhasSeries[i].Title == serie.Title){
+                    $scope.minhasSeries.splice(i, 1);
+                    $scope.removerNotas(serie);
+                }
+            }
 
-		for (var i = $scope.minhasSeries.length - 1; i >= 0; i--) {
-			if($scope.minhasSeries[i].Title == serie.Title){
-				$scope.minhasSeries.splice(i, 1);
-				$scope.removerNotas(serie);
-			}
-		}
+        }, function (response) {
+            $scope.postResultMessage = "Fail!";
+        });
+
+
+
+
 	}	
 
 	$scope.removerNotas = function(serie){
@@ -325,15 +313,16 @@ angular.module("feira-app").controller("listaSeriesCtrl", function ($state,$scop
 			}
 		}
 	}
-	
 
-  
-
-  
+    $scope.getWatchlist = function(serie){
+        var url = "/watchlist";
 
 
-
-  
-  
+        $http.post(url).then(function (response) {
+        }, function (response) {
+        	console.log(response);
+            $scope.postResultMessage = "Fail!";
+        });
+    }
 
 });

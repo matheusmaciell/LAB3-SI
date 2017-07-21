@@ -18,7 +18,7 @@ public class UsuarioPOJO {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-  
+
     @Column(name = "email")
     private String email;
 
